@@ -1,0 +1,26 @@
+{
+  "xsappname": "microservice",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.readOnlyAnubhav",
+      "description": "display"
+    },
+    {
+      "name": "$XSAPPNAME.editAnubhav",
+      "description": "display"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "readRoleTemplateAnubhav",
+      "description": "You can read with this yay role!",
+      "scope-references": ["$XSAPPNAME.readOnlyAnubhav"]
+    },
+    {
+      "name": "editRoleTemplateAnubhav",
+      "description": "You can edit with this yay role!",
+      "scope-references": ["$XSAPPNAME.editAnubhav"]
+    }
+  ]
+}

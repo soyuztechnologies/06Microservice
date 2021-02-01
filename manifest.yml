@@ -1,0 +1,47 @@
+applications:
+- name: microservice
+  buildpack: sap_java_buildpack
+  memory: 1024M
+  routes:
+    - route: https://hdicrudjdbc-anubhavapp.cfapps.eu10.hana.ondemand.com
+  timeout: 100
+  path: ./05JDBCMicroservice/target/05HDICURDJDBC-0.0.1-SNAPSHOT.war
+  services:
+  - hanadbhdi
+  - xsuaams
+
+- name: nodeApp
+  buildpack: nodejs_buildpack
+  memory: 256M
+  routes:
+    - route: https://nodeApp-anubhavapp.cfapps.eu10.hana.ondemand.com
+  timeout: 100
+  path: nodeApp
+  services:
+    - hanadbhdi
+    - xsuaams
+
+- name: approuter
+  buildpack: nodejs_buildpack
+  memory: 128M
+  routes:
+    - route: https://approuter-anubhavapp.cfapps.eu10.hana.ondemand.com
+  timeout: 100
+  path: approuter
+  services:
+    - xsuaams
+  env:
+    destinations: >
+      [
+        {
+          "name": "springapp",
+          "url": "https://hdicrudjdbc-anubhavapp.cfapps.eu10.hana.ondemand.com",
+          "forwardAuthToken": true
+        },
+        {
+          "name": "nodeapp",
+          "url": "https://nodeApp-anubhavapp.cfapps.eu10.hana.ondemand.com",
+          "forwardAuthToken": true
+        }
+      ]
+
